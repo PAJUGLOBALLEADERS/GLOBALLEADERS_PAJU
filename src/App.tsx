@@ -12,9 +12,25 @@ import type { SiteData } from './shared/siteTypes.ts';
 
 type RouteView = 'home' | 'admin';
 
+function getNormalizedBase(): string {
+  const base = import.meta.env.BASE_URL || '/';
+  return base.endsWith('/') ? base : `${base}/`;
+}
+
 function getInitialView(): RouteView {
   if (typeof window !== 'undefined') {
-    if (window.location.pathname === '/admin' || window.location.hash === '#admin') {
+    const base = getNormalizedBase();
+    const pathname = window.location.pathname;
+    const relativePath = pathname.startsWith(base)
+      ? pathname.slice(base.length)
+      : pathname.replace(/^\/+/, '');
+
+    if (
+      relativePath === 'admin' ||
+      relativePath === 'admin/' ||
+      window.location.hash === '#admin' ||
+      window.location.hash === '#/admin'
+    ) {
       return 'admin';
     }
   }
@@ -62,7 +78,8 @@ export default function App() {
   const navigateTo = (nextView: RouteView) => {
     setView(nextView);
     if (typeof window !== 'undefined') {
-      const targetUrl = nextView === 'admin' ? '/admin' : '/';
+      const base = getNormalizedBase();
+      const targetUrl = nextView === 'admin' ? `${base}admin` : base;
       if (window.location.pathname !== targetUrl) {
         window.history.pushState({}, '', targetUrl);
       }

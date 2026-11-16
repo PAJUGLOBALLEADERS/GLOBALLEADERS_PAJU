@@ -24,6 +24,7 @@ import {
   deleteInquiry,
   fetchInquiries,
   getStoredAdminToken,
+  isStaticHostingMode,
   loginAdmin,
   resetSiteData,
   setStoredAdminToken,
@@ -526,6 +527,13 @@ export function AdminPage({ siteData, onSiteDataSaved, onBackToHome }: AdminPage
         )}
 
         <main className="p-4 sm:p-8 max-w-5xl w-full space-y-8">
+          {isStaticHostingMode() && (
+            <div className="px-4 py-3 bg-[#F2F2EE] border border-[#E5E5DF] rounded-xl text-xs text-[#3F3F46] flex flex-wrap items-center justify-between gap-2">
+              <span>
+                정적 호스팅(GitHub Pages) 모드로 동작 중입니다. 변경사항은 현재 브라우저에 저장되며, 모든 방문자에게 영구 반영하려면 관리자 설정에서 JSON 백업을 다운로드해 프로젝트 기본 데이터에 반영하세요.
+              </span>
+            </div>
+          )}
           {/* TAB 1: Overview & Basic Info */}
           {activeTab === 'overview' && (
             <>

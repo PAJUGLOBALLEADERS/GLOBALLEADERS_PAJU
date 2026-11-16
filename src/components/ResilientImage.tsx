@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ImageOff } from 'lucide-react';
+import { resolveAssetUrl } from '../lib/assetUrl.ts';
 
 interface ResilientImageProps {
   src: string;
@@ -10,8 +11,9 @@ interface ResilientImageProps {
 
 export function ResilientImage({ src, alt, className = '', fallbackTitle }: ResilientImageProps) {
   const [failed, setFailed] = useState(false);
+  const resolvedSrc = resolveAssetUrl(src);
 
-  if (!src || failed) {
+  if (!resolvedSrc || failed) {
     return (
       <div
         className={`flex flex-col items-center justify-center bg-[#F2F2EE] border border-[#E5E5DF] text-[#71717A] p-6 text-center ${className}`}
@@ -28,7 +30,7 @@ export function ResilientImage({ src, alt, className = '', fallbackTitle }: Resi
 
   return (
     <img
-      src={src}
+      src={resolvedSrc}
       alt={alt}
       referrerPolicy="no-referrer"
       loading="lazy"

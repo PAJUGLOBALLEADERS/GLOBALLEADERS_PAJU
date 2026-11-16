@@ -2,5 +2,7 @@
   "name": "글로벌리더스 (Global Leaders)",
   "description": "파주 문산 유아 영어교육전문기관 글로벌리더스 공식 반응형 홈페이지 및 콘텐츠 관리 시스템",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }
